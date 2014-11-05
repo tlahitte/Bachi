@@ -32,36 +32,74 @@
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
         <h3>
-<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
+<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Bienvenue sur le projet Bachi Taïko</h3>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+<h3>Qu’est-ce que le projet Bachi Taïko?</h3>
+	<p>Bachi Taïko est une installation électronique et interactive mettant en relation une paire de Bachi avec un environnement visuel et auditif généré en temps réel. Par l’intermédiaire des Bachis et des capteurs électroniques implantés dans chacun d’eux, l’utilisateur renvoie des données à l’ordinateur qui sont traitées en temps réel pour faire venir évoluer l’environnement virtuel face à lui. Environnement virtuel en grande partie composé d’un rendu à partir d’une Xbox Kinect.</p>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
+<h3>Compris dans le projet</h3>
+<pre><code> - sketch Arduino
+- sketch Processing
+- patch Max/MSP
+- fichier Readme.txt pour l'installation
+- dossier d'images du projet
+- vidéo du projet 
 </code></pre>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+<h3>Installation</h3>
 
-<h3>
-<a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
+<p>Des images du projet sont disponibles dans le fichier IMG associé</br>
+</br>
+Matériel nécessaire :</br>
+	— une paire de Bachi</br>
+	— un Arduino Leonardo</br>
+	— deux cellules photosensibles</br>
+	— 4x résistance 100k</br>
+	— 4x DEL (couleur similaire)</br>
+	— un capteur de vibration Piezo</br>
+	— un accéléromètre 3DOF (ADXL335) //uniquement l’accélération en Y est utilisé. -> http://diopter.fr/index.php/technique/systeme-numerique/41-adx-335-et-arduino</br>
+	— Kinect model n° 1414 //tous les modelés ne sont pas fonctionnel avec openKinect -> http://shiffman.net/p5/kinect/</br>
+	</br>
+Logiciel et librairies nécessaires :</br>
+	— Processing 2.2.1</br>
+				[ ] serial </br>
+				[ ] oscP5</br>
+				[ ] openKinect</br>
+	— Arduino 1.0.6</br>
+	— Max/MSP 6.1.8</br>
+	</br>
+Montage électronique : </br>
+	Referez-vous aux images pour plus de précision sur le montage. Chacun des capteurs doit être branché sur une entrée analogique du Arduino pour la récupération de données.</br>
+	Utilisez un diviseur de tension pour les deux cellules photosensibles. Uniquement l’axe des Y est utilisé sur l’accéléromètre.</br>
+	</br>
+<h3>Configuration du code</h3>
+Chacun des patch (Arduino, P5 et max/MSP) est commentée.</br>
+ @1 — Arduino exécute la lecture des capteurs et envoie leurs données via le port série.</br>
+ @2 — Processing lit les données du port série, les calibrent, les utilisent pour altérer le visuel et renvoie une partie des données en OSC à Max/MSP</br>
+ @3 — Max/MSP se sert des valeurs de vibration du Piezo et de l’accéléromètre pour altérer l’audio.</br>
+</br>
+Bug fréquent : Allouez plus de 1024Mo de mémoire à Processing en allant dans son menu de préférences.</br>
+</p>
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
-
-<h3>
-<a name="rather-drive-stick" class="anchor" href="#rather-drive-stick"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
-
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
-
-<h3>
-<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
-
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
-
-<h3>
-<a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
-
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
+<h3>Lancement du code</h3>
+[1] téléverser le code Arduino sur votre carte Leonardo.</br>
+		[a] effectuer un premier test rapide en obstruant les cellules photosensibles, elles devraient allumer les DEL si elles ne perçoivent plus de lumières.</br>
+[2] Lancer le sketch Processing en mode présentation (shift + cmd + R)</br>
+		Le sketch Processing contient une quantité d’options pour contrôler la bonne marche du logiciel.</br>
+		[touche a] une fois relié à max/MSP, cette touche permet d’activer ou de couper l’audio.</br>
+		[touche d] affichage un récapitulatif de débug du sketch (valeur reçue depuis l’Arduino, FrameRate actuel, FrameRate de la Kinect,...)</br>
+		[touche c] permets de lancer l’outil de calibration des Bachis.</br>
+		[touche UP et DOWN] règle le seuil de profondeur pris en compte par la Kinect.</br>
+		</br>
+		<pre><code>Bug fréquent : changer la variable globale portName avec le nom de votre port série — visible depuis Arduino</code></pre></br>
+[3] Lancer le patch max/MSP</br>
+		[a] vérifié dans votre console max (cmd+M) que votre port UDP est bien fonctionnel.</br>
+		[b] vérifier la bonne réception des valeurs des capteurs</br>
+		
+<h3>Information</h3>
+</br>
+Contactez Tommy LAHITTE : <mailto>tlahitte@gmail.com</mailto>
+entête — [Bachi_taiko]
       </section>
     </div>
 
@@ -72,8 +110,6 @@ $ git checkout gh-pages
         <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>
-
-    
 
   </body>
 </html>
